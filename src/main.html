@@ -12,15 +12,17 @@
         <script>
             //页面的js代码：
             const { ipcRenderer } = require('electron');
+            let count = 0;
+
             function handleClick() {
                 ipcRenderer.send('button:click');
             }
-            ipcRenderer.on('setRow', (event, task) => {
-                // console.log(task[0].data.join('\n'));
-                // console.log(task);
-                document.querySelector('.text').innerHTML = task;
+            ipcRenderer.on('setCount', (event, task) => {
+                document.querySelector('.text').innerText = '读取中：' + task;
             });
-            
+            ipcRenderer.on('setRow', (event, task) => {
+                console.log(task);
+            });
         </script>
     </body>
 </html>

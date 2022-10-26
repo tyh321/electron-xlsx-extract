@@ -49,6 +49,7 @@ ipcMain.on('button:click', () => {
                         .extract(filePath)
                         .on('row', function (row) {
                             arr.push(row);
+                            mainWindow.webContents.send('setCount', row);
                         })
                         .on('end', function (row) {
                             mainWindow.webContents.send('setRow', arr);

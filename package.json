@@ -1,11 +1,11 @@
 {
-  "name": "tasky",
+  "name": "electron-xlsx-extract",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "build": {
-    "appId": "this.is.tasky",
-    "productName": "Tasky",
+    "appId": "electron-xlsx-extract",
+    "productName": "electron-xlsx-extract",
     "copyright": "Copyright © 2021 Alaso",
     "directories": {
       "buildResources": "build",
