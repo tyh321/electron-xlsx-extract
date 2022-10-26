@@ -16,6 +16,7 @@
 
             function handleClick() {
                 ipcRenderer.send('button:click');
+                document.querySelector('.text').innerText = '读取中请稍等。。。';
             }
             ipcRenderer.on('setCount', (event, task) => {
                 document.querySelector('.text').innerText = '读取中：' + task;
