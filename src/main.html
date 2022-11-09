@@ -12,17 +12,28 @@
         <script>
             //页面的js代码：
             const { ipcRenderer } = require('electron');
-            let count = 0;
+            let text = document.querySelector('.text');
+            let time = 0;
+            let timer;
 
             function handleClick() {
                 ipcRenderer.send('button:click');
-                document.querySelector('.text').innerText = '读取中请稍等。。。';
             }
-            ipcRenderer.on('setCount', (event, task) => {
-                document.querySelector('.text').innerText = '读取中：' + task;
+            ipcRenderer.on('setStart', (event, type) => {
+                if (type) {
+                    timer = setInterval(() => {
+                        time++;
+                        text.innerText = '读取中：0' + ' 用时：' + time;
+                    }, 1000);
+                } else {
+                    clearInterval(timer);
+                }
             });
             ipcRenderer.on('setRow', (event, task) => {
-                console.log(task);
+                text.innerText = '读取中：' + task + ' 用时：' + time;
+            });
+            ipcRenderer.on('setError', (event, task) => {
+                text.innerText = '错误：' + task;
             });
         </script>
     </body>

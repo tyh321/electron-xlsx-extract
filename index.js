@@ -41,27 +41,28 @@ ipcMain.on('button:click', () => {
                 const { XLSX } = require('xlsx-extract');
 
                 const filePath = response.filePaths[0];
+                if (!filePath) return;
 
-                let arr = [];
+                let count = 0;
 
+                mainWindow.webContents.send('setStart', true);
                 await new Promise((resolve, reject) => {
                     new XLSX()
                         .extract(filePath)
                         .on('row', function (row) {
-                            arr.push(row);
-                            mainWindow.webContents.send('setCount', row);
+                            mainWindow.webContents.send('setRow', count++);
                         })
                         .on('end', function (row) {
-                            mainWindow.webContents.send('setRow', arr);
+                            mainWindow.webContents.send('setStart', false);
                             resolve();
                         })
                         .on('error', function (err) {
-                            mainWindow.webContents.send('setRow', err);
+                            mainWindow.webContents.send('setError', err);
                             reject(err);
                         });
                 });
             } catch (error) {
-                mainWindow.webContents.send('setRow', error);
+                mainWindow.webContents.send('setError', error);
             }
         });
 });
